@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form with POST API Call</title>
+</head>
+<body>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    // Attach an event listener to the form
+    document.getElementById('myForm').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      // Get form data
+	  const email = document.getElementById('email').value;
+      // Prepare data to send
+      const data = {email };
+      try {
+        // Make the POST request
+        const response = await fetch('https://sachina.myfreshworks.com/crm/marketer/mas/api/v1/events?email=tom1006riddle@gmail.com&event_name=pay_now', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Set headers if needed
+			'Authorization': 'Token token=81FvbUEwe1bqfmKiGI_ACw' // Use if authentication is needed
+          },
+          body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const result = await response.json();
+        console.log('Success:', result);
+        alert('Form submitted successfully!'); // Optional user feedback
+      } catch (error) {
+        console.error('Error:', error);
+        alert('There was an error submitting the form.'); // Optional user feedback
+      }
+    });
+  </script>
+</body>
+</html>
